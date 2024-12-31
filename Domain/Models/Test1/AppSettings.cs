@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence
+namespace Domain.Models.Test1
 {
-    internal class Class2
+    public class AppSettings
     {
+        public string[] Nombres { get; set; }
     }
 }
