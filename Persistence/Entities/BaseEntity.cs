@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Test1
+namespace Infrastructure.Persistence.Entities
 {
-    public class PersonModel
+    public class BaseEntity
     {
-        public string[] Nombres { get; set; }
     }
 }

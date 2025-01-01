@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Models.Test1
+namespace Domain.Interfaces.Id
 {
-    public class AppSettings
+    public interface IGenerateIdUseCase
     {
-        public string[] Nombres { get; set; }
+        public string GenerateGuId();
     }
 }
