@@ -41,6 +41,52 @@ namespace Infrastructure.Persistence.Repositories.Log
             return ConvertToModel(entity);
         }
 
+        PersonModel IPersonRepo.Delete(string id)
+        {
+            if (!Exist(id))
+            {
+                throw new Exception("Person not found");
+            }
+
+            var entity = _context.Persons.FirstOrDefault(p => p.Id == id);
+
+            if (entity == null)
+            {
+                throw new Exception("Person not found");
+            }
+
+            return ConvertToModel(entity);
+        }
+
+
+
+        PersonModel IPersonRepo.Update(PersonModel personModel)
+        {
+            if (!Exist(personModel.Id))
+            {
+                throw new Exception("Person not found");
+            }
+
+            var index = _context.Persons.FindIndex(p => p.Id == personModel.Id);
+
+            var entity = new PersonEntity()
+            {
+                DNI = personModel.DNI,
+                Name = personModel.Name,
+                Id = personModel.Id,
+                IsDeleted = personModel.IsDeleted
+            };
+
+            _context.Persons[index] = entity;
+            return ConvertToModel(entity);
+        }
+
+
+        public bool Exist(string id)
+        {
+            return _context.Persons.Any(p => p.Id == id);
+        }
+
         public string[] GetNames()
         {
             var names = appSettings.Nombres;
@@ -67,18 +113,6 @@ namespace Infrastructure.Persistence.Repositories.Log
                 DNI = entity.DNI,
                 IsDeleted = entity.IsDeleted
             };
-        }
-
-        PersonModel IPersonRepo.Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-        PersonModel IPersonRepo.Update(PersonModel personModel)
-        {
-            throw new NotImplementedException();
         }
     }
 }
