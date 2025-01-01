@@ -9,6 +9,7 @@ namespace Domain.Interfaces.Log
         public PersonModel Update(PersonModel personModel);
         public PersonModel Delete(string id);
         public PersonModel GetById(string id);
+        public bool Exist(string id);
         public string[] GetNames();
     }
 }
