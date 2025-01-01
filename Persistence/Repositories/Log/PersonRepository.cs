@@ -11,21 +11,23 @@ namespace Infrastructure.Persistence.Repositories.Log
     public class PersonRepository : IPersonRepo, IBaseMapper<PersonModel, PersonEntity>
     {
         readonly AppSettings appSettings;
-        readonly IPersonRepo _personRepo;
         readonly MiK8sContext _context;
         readonly IGenerateIdUseCase _generateId;
-        public PersonRepository(IOptions<AppSettings> options, PersonRepository personRepo, MiK8sContext context, IGenerateIdUseCase generateId)
+        public PersonRepository(IOptions<AppSettings> options, MiK8sContext context, IGenerateIdUseCase generateId)
         {
             appSettings = options.Value;
-            _personRepo = personRepo;
             _context = context;
             _generateId = generateId;
         }
 
         public PersonModel GetById(string id)
         {
-            var person = _context.Persons.First(p => p.Id == id);
+            var person = _context.Persons.FirstOrDefault(p => p.Id == id);
 
+            if (person == null)
+            {
+                throw new Exception("Person not found");
+            }
             return ConvertToModel(person);
         }
 
@@ -47,12 +49,24 @@ namespace Infrastructure.Persistence.Repositories.Log
 
         public PersonEntity ConvertToEntity(PersonModel Model)
         {
-            throw new NotImplementedException();
+            return new PersonEntity
+            {
+                Id = Model.Id,
+                Name = Model.Name,
+                DNI = Model.DNI,
+                IsDeleted = Model.IsDeleted
+            };
         }
 
         public PersonModel ConvertToModel(PersonEntity entity)
         {
-            throw new NotImplementedException();
+            return new PersonModel
+            {
+                Id = entity.Id,
+                Name = entity.Name,
+                DNI = entity.DNI,
+                IsDeleted = entity.IsDeleted
+            };
         }
 
         PersonModel IPersonRepo.Delete(string id)

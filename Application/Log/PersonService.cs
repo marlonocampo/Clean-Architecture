@@ -1,9 +1,5 @@
-﻿using Domain.Interfaces.Log;  
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Interfaces.Log;
+using Domain.Models.Log;
 
 namespace Application.Log
 {
@@ -13,6 +9,16 @@ namespace Application.Log
         public PersonService(IPersonRepo personRepo)
         {
             _personRepo = personRepo;
+        }
+
+        public PersonModel GetById(string id)
+        {
+            return _personRepo.GetById(id);
+        }
+
+        public PersonModel Save(PersonModel personModel)
+        {
+            return _personRepo.Save(personModel);
         }
 
         public string[] GetNames()
