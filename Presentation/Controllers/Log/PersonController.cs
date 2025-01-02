@@ -32,15 +32,20 @@ namespace Infrastructure.Presentation.Controllers.Log
             return Ok(person);
         }
 
-        [HttpGet]
-        public ActionResult GetNames()
+        [HttpPut]
+        public IActionResult Update([FromBody] PersonModel person)
         {
-            var names = _personService.GetNames();
-            if (names == null)
-            {
-                return NotFound();
-            }
-            return Ok(names);
+            var model = _personService.Update(person);
+            return Ok(model);
         }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult Delte(string id)
+        {
+            var model = _personService.Delete(id);
+            return Ok(model);
+        }
+
     }
 }

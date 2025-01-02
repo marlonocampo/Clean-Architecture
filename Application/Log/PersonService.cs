@@ -21,6 +21,15 @@ namespace Application.Log
             return _personRepo.Save(personModel);
         }
 
+        public PersonModel Update(PersonModel personModel)
+        {
+            return _personRepo.Update(personModel);
+        }
+
+        public PersonModel Delete(string id)
+        {
+            return _personRepo.Delete(id);
+        }
         public string[] GetNames()
         {
             return _personRepo.GetNames();
